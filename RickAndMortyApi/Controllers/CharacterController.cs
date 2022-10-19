@@ -43,7 +43,7 @@ namespace RickAndMortyApi.Controllers
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<Multiple<Character>>>> GetByFilter([FromQuery] CharacterParameters parameters, int page = 1)
         {
-            var response = await _characterService.GetCharacter(page, parameters);
+            var response = await _characterService.GetCharacters(page, parameters);
 
             if (!response.Success)
             {

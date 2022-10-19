@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RickAndMortyApi.Services.CharacterService;
+using RickAndMortyApi.Services.EpisodeService;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -47,6 +48,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<IEpisodeService, EpisodeService>();
 
 
 var app = builder.Build();

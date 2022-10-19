@@ -41,7 +41,7 @@ namespace RickAndMortyApi.Services.CharacterService
             return response;
         }
 
-        public async Task<ServiceResponse<Multiple<Character>>> GetCharacter(int page, CharacterParameters parameters)
+        public async Task<ServiceResponse<Multiple<Character>>> GetCharacters(int page, CharacterParameters parameters)
         {
             ServiceResponse<Multiple<Character>> response = new ServiceResponse<Multiple<Character>>();
 

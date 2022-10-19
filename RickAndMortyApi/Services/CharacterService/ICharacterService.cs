@@ -8,6 +8,6 @@ namespace RickAndMortyApi.Services.CharacterService
     {
         Task<ServiceResponse<Multiple<Character>>> GetAllCharacters(int page);
         Task<ServiceResponse<Character>> GetCharacter(int id);
-        Task<ServiceResponse<Multiple<Character>>> GetCharacter(int page, CharacterParameters parameters);
+        Task<ServiceResponse<Multiple<Character>>> GetCharacters(int page, CharacterParameters parameters);
     }
 }
