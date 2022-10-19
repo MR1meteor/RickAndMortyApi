@@ -3,6 +3,7 @@ global using RickAndMortyApi.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RickAndMortyApi.Services;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -45,7 +46,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-
+builder.Services.AddScoped<ICharacterService, CharacterService>();
 
 
 var app = builder.Build();
