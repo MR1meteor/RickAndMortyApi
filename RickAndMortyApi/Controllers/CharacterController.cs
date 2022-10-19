@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rick;
 using RickAndMortyApi.Filters;
 using RickAndMortyApi.Models;
-using RickAndMortyApi.Services;
+using RickAndMortyApi.Services.CharacterService;
 
 namespace RickAndMortyApi.Controllers
 {

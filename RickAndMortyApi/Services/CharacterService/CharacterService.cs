@@ -2,7 +2,7 @@
 using RickAndMortyApi.Filters;
 using RickAndMortyApi.Models;
 
-namespace RickAndMortyApi.Services
+namespace RickAndMortyApi.Services.CharacterService
 {
     public class CharacterService : ICharacterService
     {
@@ -20,7 +20,7 @@ namespace RickAndMortyApi.Services
             }
 
             response.Data = characters;
-          
+
             return response;
         }
 

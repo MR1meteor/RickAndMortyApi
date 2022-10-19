@@ -3,7 +3,7 @@ global using RickAndMortyApi.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RickAndMortyApi.Services;
+using RickAndMortyApi.Services.CharacterService;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 

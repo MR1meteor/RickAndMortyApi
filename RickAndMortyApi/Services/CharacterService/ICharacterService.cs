@@ -2,7 +2,7 @@
 using RickAndMortyApi.Filters;
 using RickAndMortyApi.Models;
 
-namespace RickAndMortyApi.Services
+namespace RickAndMortyApi.Services.CharacterService
 {
     public interface ICharacterService
     {
