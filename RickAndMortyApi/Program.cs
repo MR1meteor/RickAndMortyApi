@@ -15,6 +15,8 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+
 
 
 var app = builder.Build();

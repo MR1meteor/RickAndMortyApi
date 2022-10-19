@@ -23,6 +23,8 @@ namespace RickAndMortyApi.Data
             ServiceResponse<string> response = new ServiceResponse<string>();
             
             var user = await _context.Users.FirstOrDefaultAsync(user => user.Username.ToLower().Equals(username.ToLower()));
+            bool verify = VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
+            Console.WriteLine(verify.ToString());
 
             if (user == null)
             {
@@ -30,15 +32,14 @@ namespace RickAndMortyApi.Data
                 response.Message = "User not found.";
                 return response;
             }
-
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            else if (!verify)
             {
                 response.Success = false;
                 response.Message = "Wrond password.";
                 return response;
             }
-
-            response.Data = CreateToken(user);
+            else
+                response.Data = CreateToken(user);
 
             return response;
             
@@ -90,7 +91,7 @@ namespace RickAndMortyApi.Data
             using(var hmac = new HMACSHA512(passwordSalt))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordSalt);
+                return computedHash.SequenceEqual(passwordHash);
             }
         }
 
