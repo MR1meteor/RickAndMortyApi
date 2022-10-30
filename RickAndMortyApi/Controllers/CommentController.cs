@@ -29,5 +29,16 @@ namespace RickAndMortyApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<GetCommentDto>>> UpdateComment(UpdateCommentDto updatedComment)
+        {
+            ServiceResponse<GetCommentDto> response = await _commentService.UpdateComment(updatedComment);
+
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
     }
 }

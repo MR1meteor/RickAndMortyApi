@@ -37,5 +37,34 @@ namespace RickAndMortyApi.Services.CommentService
 
             return response;
         }
+
+        public async Task<ServiceResponse<GetCommentDto>> UpdateComment(UpdateCommentDto updatedComment)
+        {
+            ServiceResponse<GetCommentDto> response = new ServiceResponse<GetCommentDto>();
+
+            var comment = await _context.Comments.Include(c => c.User).FirstOrDefaultAsync(c => c.Id.Equals(updatedComment.Id));
+
+            if (comment == null)
+            {
+                response.Success = false;
+                response.Message = "Comment not found.";
+                return response;
+            }
+
+            if (comment.User == null || comment.User.Id != GetUserId())
+            {
+                response.Success = false;
+                response.Message = "Access denied.";
+                return response;
+            }
+
+            comment.Text = updatedComment.Text;
+            
+            await _context.SaveChangesAsync();
+
+            response.Data = await _context.Comments.Where(c => c.Id == comment.Id).Select(c => _mapper.Map<GetCommentDto>(c)).FirstOrDefaultAsync();
+
+            return response;
+        }
     }
 }
