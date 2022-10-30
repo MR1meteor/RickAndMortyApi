@@ -3,6 +3,7 @@ using AutoMapper;
 using RickAndMortyApi.Dtos.Comment;
 using RickAndMortyApi.Models;
 using System.Security.Claims;
+using RickAndMortyApi.Filters;
 
 namespace RickAndMortyApi.Services.CommentService
 {
@@ -35,6 +36,43 @@ namespace RickAndMortyApi.Services.CommentService
             }
 
             response.Data = comment;
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<GetCommentDto>>> GetCommentsByFilter(int amount, int page, CommentParameters parameters)
+        {
+            ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
+
+            amount = amount <= 0 ? 10 : amount;
+            page = page <= 0 ? 1 : page;
+
+            int requestedCommentsAmount = await _context.Comments.Where(c => (c.User.Id == parameters.UserId || parameters.UserId == null) &&
+                                                                             (c.ParentId == parameters.ParentId || parameters.ParentId == null) &&
+                                                                             (c.Type == parameters.Type || parameters.Type == null)).CountAsync();
+            bool hasRemainder = requestedCommentsAmount % amount > 0;
+
+            if (requestedCommentsAmount / amount + Convert.ToInt32(hasRemainder) < page)
+            {
+                response.Success = false;
+                response.Message = "Comment(s) not found.";
+                return response;
+            }
+
+            List<GetCommentDto> comments = await _context.Comments.Where(c => (c.User.Id == parameters.UserId || parameters.UserId == null) &&
+                                                                              (c.ParentId == parameters.ParentId || parameters.ParentId == null) && 
+                                                                              (c.Type == parameters.Type || parameters.Type == null)).
+                                                                   OrderBy(c => c.CreateDate).Skip(amount * (page - 1)).
+                                                                   Take(amount).Select(c => _mapper.Map<GetCommentDto>(c)).ToListAsync();
+
+            if (comments == null)
+            {
+                response.Success = false;
+                response.Message = "Comment(s) not found.";
+                return response;
+            }
+
+            response.Data = comments;
 
             return response;
         }
