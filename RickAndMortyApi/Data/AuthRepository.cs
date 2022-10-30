@@ -62,6 +62,20 @@ namespace RickAndMortyApi.Data
             user.PasswordSalt = passwordSalt;
 
             _context.Users.Add(user);
+
+            // КОСТЫЛИИИИИИИИИИИИИИИИИИИИИИ
+
+            UserProfile profile = new UserProfile
+            {
+                Nickname = user.Username,
+                CreateDate = DateTime.Now,
+                User = user
+            };
+
+            _context.UserProfiles.Add(profile);
+
+            // Костыли закончились, выдыхаем
+
             await _context.SaveChangesAsync();
 
             response.Data = user.Id;

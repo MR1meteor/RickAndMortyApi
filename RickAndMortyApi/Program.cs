@@ -7,6 +7,7 @@ using RickAndMortyApi.Services.CharacterService;
 using RickAndMortyApi.Services.CommentService;
 using RickAndMortyApi.Services.EpisodeService;
 using RickAndMortyApi.Services.LocationService;
+using RickAndMortyApi.Services.ProfileService;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -55,6 +56,7 @@ builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IEpisodeService, EpisodeService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 var app = builder.Build();
 
