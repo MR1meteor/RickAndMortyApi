@@ -19,6 +19,17 @@ namespace RickAndMortyApi.Controllers
             _commentService = commentService;
         }
 
+        [HttpGet("{id}"), AllowAnonymous]
+        public async Task<ActionResult<ServiceResponse<GetCommentDto>>> GetCommentById(int id)
+        {
+            ServiceResponse<GetCommentDto> response = await _commentService.GetCommentById(id);
+
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<GetCommentDto>>> AddComment(AddCommentDto newComment)
         {

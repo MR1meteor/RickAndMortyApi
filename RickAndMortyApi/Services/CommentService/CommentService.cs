@@ -21,6 +21,24 @@ namespace RickAndMortyApi.Services.CommentService
 
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+        public async Task<ServiceResponse<GetCommentDto>> GetCommentById(int id)
+        {
+            ServiceResponse<GetCommentDto> response = new ServiceResponse<GetCommentDto>();
+
+            var comment = await _context.Comments.Where(c => c.Id == id).Select(c => _mapper.Map<GetCommentDto>(c)).FirstOrDefaultAsync();
+
+            if (comment == null)
+            {
+                response.Success = false;
+                response.Message = "Comment not found";
+                return response;
+            }
+
+            response.Data = comment;
+
+            return response;
+        }
+
         public async Task<ServiceResponse<GetCommentDto>> AddComment(AddCommentDto newComment)
         {
             ServiceResponse<GetCommentDto> response = new ServiceResponse<GetCommentDto>();
@@ -59,6 +77,7 @@ namespace RickAndMortyApi.Services.CommentService
             }
 
             comment.Text = updatedComment.Text;
+            comment.UpdateDate = DateTime.Now;
             
             await _context.SaveChangesAsync();
 
