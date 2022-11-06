@@ -61,7 +61,8 @@ namespace RickAndMortyApi.Services.CommentService
 
             List<GetCommentDto> comments = await _context.Comments.Where(c => (c.User.Id == parameters.UserId || parameters.UserId == null) &&
                                                                               (c.ParentId == parameters.ParentId || parameters.ParentId == null) && 
-                                                                              (c.Type == parameters.Type || parameters.Type == null)).
+                                                                              (c.Type == parameters.Type || parameters.Type == null) &&
+                                                                              (c.RelatedElementId == parameters.RelatedElementId || parameters.RelatedElementId == null)).
                                                                    OrderBy(c => c.CreateDate).Skip(amount * (page - 1)).
                                                                    Take(amount).Select(c => _mapper.Map<GetCommentDto>(c)).ToListAsync();
 

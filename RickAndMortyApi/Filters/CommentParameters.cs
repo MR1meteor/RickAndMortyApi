@@ -7,5 +7,6 @@ namespace RickAndMortyApi.Filters
         public int? UserId { get; set; } = null;
         public int? ParentId { get; set; } = null;
         public CommentType? Type { get; set; } = null;
+        public int? RelatedElementId { get; set; } = null;
     }
 }

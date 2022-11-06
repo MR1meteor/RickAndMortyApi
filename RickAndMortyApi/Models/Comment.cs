@@ -9,5 +9,6 @@
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public CommentType Type { get; set; } = CommentType.Character;
+        public int RelatedElementId { get; set; }
     }
 }
