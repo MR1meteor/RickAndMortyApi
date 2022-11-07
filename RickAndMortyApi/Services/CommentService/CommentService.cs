@@ -7,7 +7,7 @@ using RickAndMortyApi.Filters;
 
 namespace RickAndMortyApi.Services.CommentService
 {
-    public class CommentService : ICommentService
+    public class CommentService// : ICommentService
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;

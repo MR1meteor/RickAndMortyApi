@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RickAndMortyApi.Dtos.Comment;
 using RickAndMortyApi.Dtos.Profile;
+using RickAndMortyApi.Dtos.Topic;
 using RickAndMortyApi.Models;
 
 namespace RickAndMortyApi
@@ -12,6 +13,7 @@ namespace RickAndMortyApi
             CreateMap<Comment, GetCommentDto>();
             CreateMap<AddCommentDto, Comment>();
             CreateMap<UserProfile, GetProfileDto>();
+            CreateMap<Topic, GetTopicDto<object>>();
         }
     }
 }
