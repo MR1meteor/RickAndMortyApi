@@ -22,6 +22,7 @@ namespace RickAndMortyApi.Services.CommentService
 
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+        /*
         public async Task<ServiceResponse<GetCommentDto>> GetCommentById(int id)
         {
             ServiceResponse<GetCommentDto> response = new ServiceResponse<GetCommentDto>();
@@ -124,5 +125,6 @@ namespace RickAndMortyApi.Services.CommentService
 
             return response;
         }
+        */
     }
 }
