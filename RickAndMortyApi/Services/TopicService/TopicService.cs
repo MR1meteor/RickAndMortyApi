@@ -49,13 +49,13 @@ namespace RickAndMortyApi.Services.TopicService
             switch (topic.RelatedElementType)
             {
                 case ObjectsType.Character:
-                    topicDto.RelatedElement = _characterService.GetCharacter(topic.RelatedElementId);
+                    topicDto.RelatedElement = await _characterService.GetCharacter(topic.RelatedElementId);
                     break;
                 case ObjectsType.Location:
-                    topicDto.RelatedElement = _locationService.GetLocation(topic.RelatedElementId);
+                    topicDto.RelatedElement = await _locationService.GetLocation(topic.RelatedElementId);
                     break;
                 case ObjectsType.Episode:
-                    topicDto.RelatedElement = _episodeService.GetEpisode(topic.RelatedElementId);
+                    topicDto.RelatedElement = await _episodeService.GetEpisode(topic.RelatedElementId);
                     break;
                 default:
                     break;
