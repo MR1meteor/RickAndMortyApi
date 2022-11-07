@@ -14,6 +14,7 @@ namespace RickAndMortyApi
             CreateMap<AddCommentDto, Comment>();
             CreateMap<UserProfile, GetProfileDto>();
             CreateMap<Topic, GetTopicDto<object>>();
+            CreateMap<AddTopicDto, Topic>();
         }
     }
 }

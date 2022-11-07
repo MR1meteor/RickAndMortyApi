@@ -65,5 +65,21 @@ namespace RickAndMortyApi.Services.TopicService
 
             return response;
         }
+
+        public async Task<ServiceResponse<GetTopicDto<object>>> AddTopic(AddTopicDto newTopic)
+        {
+            ServiceResponse<GetTopicDto<object>> response = new ServiceResponse<GetTopicDto<object>>();
+
+            Topic topic = _mapper.Map<Topic>(newTopic);
+            topic.CreateDate = DateTime.Now;
+            topic.UpdateDate = topic.CreateDate;
+
+            _context.Topics.Add(topic);
+            await _context.SaveChangesAsync();
+
+            response.Data = GetTopicById(topic.Id).Result.Data;
+
+            return response;
+        }
     }
 }
