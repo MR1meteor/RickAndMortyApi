@@ -4,11 +4,14 @@ namespace RickAndMortyApi.Dtos.Comment
 {
     public class AddCommentDto
     {
-        /*
+
+        //public string Text { get; set; } = string.Empty;
+        //public int? ParentId { get; set; }
+        //public CommentType Type { get; set; } = CommentType.Character;
+        //public int RelatedElementId { get; set; }
+
         public string Text { get; set; } = string.Empty;
-        public int? ParentId { get; set; }
-        public CommentType Type { get; set; } = CommentType.Character;
-        public int RelatedElementId { get; set; }
-        */
+        public int TopicId { get; set; }
+        public int? ParentId { get; set; } = null;
     }
 }

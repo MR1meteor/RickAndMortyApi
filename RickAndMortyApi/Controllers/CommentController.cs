@@ -31,16 +31,16 @@ namespace RickAndMortyApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet, AllowAnonymous]
-        public async Task<ActionResult<ServiceResponse<List<GetCommentDto>>>> GetByFilter([FromQuery] CommentParameters parameters, int page = 1, int amount = 10)
-        {
-            ServiceResponse<List<GetCommentDto>> response = await _commentService.GetCommentsByFilter(amount, page, parameters);
+        //[HttpGet, AllowAnonymous]
+        //public async Task<ActionResult<ServiceResponse<List<GetCommentDto>>>> GetByFilter([FromQuery] CommentParameters parameters, int page = 1, int amount = 10)
+        //{
+        //    ServiceResponse<List<GetCommentDto>> response = await _commentService.GetCommentsByFilter(amount, page, parameters);
 
-            if (!response.Success)
-                return BadRequest(response);
+        //    if (!response.Success)
+        //        return BadRequest(response);
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<GetCommentDto>>> AddComment(AddCommentDto newComment)
