@@ -83,5 +83,35 @@ namespace RickAndMortyApi.Services.TopicService
 
             return response;
         }
+
+        public async Task<ServiceResponse<GetTopicDto<object>>> UpdateTopic(UpdateTopicDto updatedTopic)
+        {
+            ServiceResponse<GetTopicDto<object>> response = new ServiceResponse<GetTopicDto<object>>();
+
+            var topic = await _context.Topics.Include(t => t.Owner).FirstOrDefaultAsync(t => t.Id.Equals(updatedTopic.Id));
+
+            if (topic == null)
+            {
+                response.Success = false;
+                response.Message = "Topic not found.";
+                return response;
+            }
+
+            if (topic.Owner == null || topic.Owner.UserId != GetUserId())
+            {
+                response.Success = false;
+                response.Message = "Access denied.";
+                return response;
+            }
+
+            topic.Title = updatedTopic.Title;
+            topic.Text = updatedTopic.Text;
+
+            await _context.SaveChangesAsync();
+
+            response.Data = GetTopicById(topic.Id).Result.Data;
+
+            return response;
+        }
     }
 }

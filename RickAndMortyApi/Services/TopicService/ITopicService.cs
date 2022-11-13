@@ -8,5 +8,6 @@ namespace RickAndMortyApi.Services.TopicService
     {
         public Task<ServiceResponse<GetTopicDto<object>>> GetTopicById(int id);
         public Task<ServiceResponse<GetTopicDto<object>>> AddTopic(AddTopicDto newTopic);
+        public Task<ServiceResponse<GetTopicDto<object>>> UpdateTopic(UpdateTopicDto updatedTopic);
     }
 }
