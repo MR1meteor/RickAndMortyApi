@@ -9,5 +9,7 @@
         public ObjectsType RelatedElementType { get; set; }
         public DateTime UpdateDate { get; set; }
         public DateTime CreateDate { get; set; }
+
+        public UserProfile? Owner { get; set; }
     }
 }

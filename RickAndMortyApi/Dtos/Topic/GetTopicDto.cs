@@ -1,4 +1,7 @@
-﻿namespace RickAndMortyApi.Dtos.Topic
+﻿using RickAndMortyApi.Dtos.Profile;
+using RickAndMortyApi.Models;
+
+namespace RickAndMortyApi.Dtos.Topic
 {
     public class GetTopicDto<T>
     {
@@ -7,5 +10,6 @@
         public T? RelatedElement { get; set; }
         public DateTime UpdateDate { get; set; }
         public DateTime CreateDate { get; set; }
+        public GetProfileDto? Owner { get; set; }
     }
 }

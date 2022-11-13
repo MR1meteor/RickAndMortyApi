@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RickAndMortyApi.Dtos.Topic;
 using RickAndMortyApi.Models;
@@ -28,7 +29,7 @@ namespace RickAndMortyApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<ActionResult<ServiceResponse<GetTopicDto<object>>>> AddTopic(AddTopicDto newTopic)
         {
             ServiceResponse<GetTopicDto<object>> response = await _topicService.AddTopic(newTopic);

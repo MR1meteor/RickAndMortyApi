@@ -5,6 +5,7 @@ using RickAndMortyApi.Models;
 using RickAndMortyApi.Services.CharacterService;
 using RickAndMortyApi.Services.EpisodeService;
 using RickAndMortyApi.Services.LocationService;
+using RickAndMortyApi.Services.ProfileService;
 using System.Security.Claims;
 
 namespace RickAndMortyApi.Services.TopicService
@@ -35,7 +36,7 @@ namespace RickAndMortyApi.Services.TopicService
         {
             ServiceResponse<GetTopicDto<object>> response = new ServiceResponse<GetTopicDto<object>>();
 
-            var topic = await _context.Topics.Where(t => t.Id == id).FirstOrDefaultAsync();
+            var topic = await _context.Topics.Include(t => t.Owner).Where(t => t.Id == id).FirstOrDefaultAsync();
 
             GetTopicDto<object> topicDto = _mapper.Map<GetTopicDto<object>>(topic);
 
@@ -73,6 +74,7 @@ namespace RickAndMortyApi.Services.TopicService
             Topic topic = _mapper.Map<Topic>(newTopic);
             topic.CreateDate = DateTime.Now;
             topic.UpdateDate = topic.CreateDate;
+            topic.Owner = await _context.UserProfiles.FirstOrDefaultAsync(u => u.UserId == GetUserId());
 
             _context.Topics.Add(topic);
             await _context.SaveChangesAsync();
