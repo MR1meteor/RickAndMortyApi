@@ -10,6 +10,7 @@ namespace RickAndMortyApi.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Topic> Topics { get; set; }
-
+        public DbSet<ListModel> Lists { get; set; }
+        public DbSet<ListObject> ListObjects { get; set; }
     }
 }

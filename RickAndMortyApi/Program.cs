@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using RickAndMortyApi.Services.CharacterService;
 using RickAndMortyApi.Services.CommentService;
 using RickAndMortyApi.Services.EpisodeService;
+using RickAndMortyApi.Services.ListObjectService;
 using RickAndMortyApi.Services.LocationService;
 using RickAndMortyApi.Services.ProfileService;
 using RickAndMortyApi.Services.TopicService;
@@ -59,6 +60,7 @@ builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
+builder.Services.AddScoped<IListObjectService, ListObjectService>();
 
 var app = builder.Build();
 

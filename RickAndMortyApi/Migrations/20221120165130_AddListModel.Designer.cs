@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RickAndMortyApi.Data;
@@ -11,9 +12,10 @@ using RickAndMortyApi.Data;
 namespace RickAndMortyApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221120165130_AddListModel")]
+    partial class AddListModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,40 +93,6 @@ namespace RickAndMortyApi.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Lists");
-                });
-
-            modelBuilder.Entity("RickAndMortyApi.Models.ListObject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("ListId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RelatedElementId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RelatedElementType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ListId");
-
-                    b.ToTable("ListObjects");
                 });
 
             modelBuilder.Entity("RickAndMortyApi.Models.Topic", b =>
@@ -255,17 +223,6 @@ namespace RickAndMortyApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("RickAndMortyApi.Models.ListObject", b =>
-                {
-                    b.HasOne("RickAndMortyApi.Models.ListModel", "List")
-                        .WithMany()
-                        .HasForeignKey("ListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("List");
                 });
 
             modelBuilder.Entity("RickAndMortyApi.Models.Topic", b =>
