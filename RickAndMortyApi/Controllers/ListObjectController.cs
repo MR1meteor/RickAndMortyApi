@@ -38,5 +38,16 @@ namespace RickAndMortyApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<GetListObjectDto<object>>>> UpdateListObject(UpdateListObjectDto updatedObject)
+        {
+            ServiceResponse<GetListObjectDto<object>> response = await _listObjectService.UpdateListObject(updatedObject);
+
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
     }
 }

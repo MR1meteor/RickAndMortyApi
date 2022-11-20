@@ -87,5 +87,27 @@ namespace RickAndMortyApi.Services.ListObjectService
 
             return response;
         }
+
+        public async Task<ServiceResponse<GetListObjectDto<object>>> UpdateListObject(UpdateListObjectDto updatedObject)
+        {
+            ServiceResponse<GetListObjectDto<object>> response = new ServiceResponse<GetListObjectDto<object>>();
+
+            var listObject = await _context.ListObjects.FirstOrDefaultAsync(o => o.Id.Equals(updatedObject.Id));
+
+            if (listObject == null)
+            {
+                response.Success = false;
+                response.Message = "Object not found.";
+                return response;
+            }
+
+            listObject.Text = updatedObject.Text;
+
+            await _context.SaveChangesAsync();
+
+            response.Data = GetListObjectById(listObject.Id).Result.Data;
+
+            return response;
+        }
     }
 }
