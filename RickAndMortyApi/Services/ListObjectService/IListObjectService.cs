@@ -6,5 +6,6 @@ namespace RickAndMortyApi.Services.ListObjectService
     public interface IListObjectService
     {
         public Task<ServiceResponse<GetListObjectDto<object>>> GetListObjectById(int id);
+        public Task<ServiceResponse<GetListObjectDto<object>>> AddListObject(AddListObjectDto newObject);
     }
 }

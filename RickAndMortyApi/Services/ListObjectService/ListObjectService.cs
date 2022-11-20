@@ -64,5 +64,28 @@ namespace RickAndMortyApi.Services.ListObjectService
 
             return response;
         }
+
+        public async Task<ServiceResponse<GetListObjectDto<object>>> AddListObject(AddListObjectDto newObject)
+        {
+            ServiceResponse<GetListObjectDto<object>> response = new ServiceResponse<GetListObjectDto<object>>();
+
+            if (newObject.ListId == 0)
+            {
+                response.Success = false;
+                response.Message = "Wrong data";
+                return response;
+            }
+
+            ListObject listObject = _mapper.Map<ListObject>(newObject);
+            listObject.CreateDate = DateTime.Now;
+            listObject.UpdateDate = listObject.CreateDate;
+
+            _context.ListObjects.Add(listObject);
+            await _context.SaveChangesAsync();
+
+            response.Data = GetListObjectById(listObject.Id).Result.Data;
+
+            return response;
+        }
     }
 }

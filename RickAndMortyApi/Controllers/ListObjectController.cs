@@ -27,5 +27,16 @@ namespace RickAndMortyApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<GetListObjectDto<object>>>> AddListObject(AddListObjectDto newObject)
+        {
+            ServiceResponse<GetListObjectDto<object>> response = await _listObjectService.AddListObject(newObject);
+
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
     }
 }
