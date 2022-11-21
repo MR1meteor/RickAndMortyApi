@@ -36,14 +36,14 @@ namespace RickAndMortyApi.Services.ListObjectService
 
             var listObject = await _context.ListObjects.Include(o => o.List).Where(o => o.Id == id).FirstOrDefaultAsync();
 
-            GetListObjectDto<object> objectDto = _mapper.Map<GetListObjectDto<object>>(listObject);
-
             if (listObject == null)
             {
                 response.Success = false;
                 response.Message = "Element not found.";
                 return response;
             }
+
+            GetListObjectDto<object> objectDto = _mapper.Map<GetListObjectDto<object>>(listObject);
 
             switch (listObject.RelatedElementType)
             {
@@ -61,6 +61,44 @@ namespace RickAndMortyApi.Services.ListObjectService
             }
 
             response.Data = objectDto;
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<GetListObjectDto<object>>>> GetListObjectsByListId(int listId)
+        {
+            ServiceResponse<List<GetListObjectDto<object>>> response = new ServiceResponse<List<GetListObjectDto<object>>>();
+
+            var listObjects = await _context.ListObjects.Include(o => o.List).Where(o => o.ListId == listId).ToListAsync();
+
+            if (listObjects == null)
+            {
+                response.Success = false;
+                response.Message = "Object(s) not found.";
+                return response;
+            }
+
+            List<GetListObjectDto<object>> objectsDto = _mapper.Map<List<GetListObjectDto<object>>>(listObjects);
+
+            for (int i = 0; i < objectsDto.Count; i++)
+            {
+                switch (listObjects[i].RelatedElementType)
+                {
+                    case ObjectsType.Character:
+                        objectsDto[i].RelatedElement = await _characterService.GetCharacter(listObjects[i].RelatedElementId);
+                        break;
+                    case ObjectsType.Location:
+                        objectsDto[i].RelatedElement = await _locationService.GetLocation(listObjects[i].RelatedElementId);
+                        break;
+                    case ObjectsType.Episode:
+                        objectsDto[i].RelatedElement = await _episodeService.GetEpisode(listObjects[i].RelatedElementId);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            response.Data = objectsDto;
 
             return response;
         }
@@ -109,5 +147,7 @@ namespace RickAndMortyApi.Services.ListObjectService
 
             return response;
         }
+
+        
     }
 }

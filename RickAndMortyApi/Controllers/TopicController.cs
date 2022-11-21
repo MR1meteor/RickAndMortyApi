@@ -18,7 +18,7 @@ namespace RickAndMortyApi.Controllers
             _topicService = topicService;
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetTopicDto<object>>>> GetTopicById(int id)
         {
             ServiceResponse<GetTopicDto<object>> response = await _topicService.GetTopicById(id);

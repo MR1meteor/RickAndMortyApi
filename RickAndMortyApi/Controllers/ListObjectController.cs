@@ -17,10 +17,21 @@ namespace RickAndMortyApi.Controllers
             _listObjectService = listObjectService;
         }
 
-        [HttpGet("id")]
+        [HttpGet("byId/{id}")]
         public async Task<ActionResult<ServiceResponse<GetListObjectDto<object>>>> GetListObjectById(int id)
         {
             ServiceResponse<GetListObjectDto<object>> response = await _listObjectService.GetListObjectById(id);
+
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        [HttpGet("byList/{listId}")]
+        public async Task<ActionResult<ServiceResponse<List<GetListObjectDto<object>>>>> GetListObjectsByListId(int listId)
+        {
+            ServiceResponse<List<GetListObjectDto<object>>> response = await _listObjectService.GetListObjectsByListId(listId);
 
             if (!response.Success)
                 return BadRequest(response);
