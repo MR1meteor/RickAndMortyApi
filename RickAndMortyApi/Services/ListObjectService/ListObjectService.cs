@@ -71,7 +71,7 @@ namespace RickAndMortyApi.Services.ListObjectService
 
             var listObjects = await _context.ListObjects.Include(o => o.List).Where(o => o.ListId == listId).ToListAsync();
 
-            if (listObjects == null)
+            if (listObjects == null || listObjects.Count == 0)
             {
                 response.Success = false;
                 response.Message = "Object(s) not found.";
