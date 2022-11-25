@@ -7,5 +7,6 @@ namespace RickAndMortyApi.Services.ListService
     {
         public Task<ServiceResponse<GetListDto>> GetListById(int id);
         public Task<ServiceResponse<GetListDto>> AddList(AddListDto newList);
+        public Task<ServiceResponse<GetListDto>> UpdateList(UpdateListDto updatedList);
     }
 }
