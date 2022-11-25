@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using RickAndMortyApi.Dtos.List;
 using RickAndMortyApi.Dtos.ListObject;
 using RickAndMortyApi.Models;
 using RickAndMortyApi.Services.CharacterService;
 using RickAndMortyApi.Services.EpisodeService;
+using RickAndMortyApi.Services.ListService;
 using RickAndMortyApi.Services.LocationService;
 using System.Security.Claims;
 
@@ -16,9 +18,10 @@ namespace RickAndMortyApi.Services.ListObjectService
         private readonly ICharacterService _characterService;
         private readonly ILocationService _locationService;
         private readonly IEpisodeService _episodeService;
+        private readonly IListService _listService;
 
         public ListObjectService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor,
-            ICharacterService characterService, ILocationService locationService, IEpisodeService episodeService)
+            ICharacterService characterService, ILocationService locationService, IEpisodeService episodeService, IListService listService)
         {
             _mapper = mapper;
             _context = context;
@@ -26,6 +29,7 @@ namespace RickAndMortyApi.Services.ListObjectService
             _characterService = characterService;
             _locationService = locationService;
             _episodeService = episodeService;
+            _listService = listService;
         }
 
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -59,6 +63,9 @@ namespace RickAndMortyApi.Services.ListObjectService
                 default:
                     break;
             }
+
+            objectDto.List = _listService.GetListById(listObject.ListId).Result.Data;
+            
 
             response.Data = objectDto;
 
@@ -98,6 +105,11 @@ namespace RickAndMortyApi.Services.ListObjectService
                 }
             }
 
+            GetListDto currentListDto = _listService.GetListById(listObjects[0].ListId).Result.Data;
+
+            foreach (var item in objectsDto)
+                item.List = currentListDto;
+ 
             response.Data = objectsDto;
 
             return response;
