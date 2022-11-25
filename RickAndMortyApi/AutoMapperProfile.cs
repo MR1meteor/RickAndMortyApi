@@ -20,6 +20,7 @@ namespace RickAndMortyApi
             CreateMap<ListObject, GetListObjectDto<object>>();
             CreateMap<AddListObjectDto, ListObject>();
             CreateMap<ListModel, GetListDto>();
+            CreateMap<AddListDto, ListModel>();
         }
     }
 }

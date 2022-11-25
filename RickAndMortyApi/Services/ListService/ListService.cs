@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RickAndMortyApi.Dtos.List;
 using RickAndMortyApi.Models;
+using System.Security.Claims;
 
 namespace RickAndMortyApi.Services.ListService
 {
@@ -16,6 +17,8 @@ namespace RickAndMortyApi.Services.ListService
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
+
+        private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         public async Task<ServiceResponse<GetListDto>> GetListById(int id)
         {
@@ -33,6 +36,24 @@ namespace RickAndMortyApi.Services.ListService
             GetListDto listDto = _mapper.Map<GetListDto>(list);
 
             response.Data = listDto;
+
+            return response;
+        }
+        
+        public async Task<ServiceResponse<GetListDto>> AddList(AddListDto newList)
+        {
+            ServiceResponse<GetListDto> response = new ServiceResponse<GetListDto>();
+
+            ListModel list = _mapper.Map<ListModel>(newList);
+
+            list.Owner = await _context.UserProfiles.FirstOrDefaultAsync(u => u.UserId == GetUserId());
+            list.CreateDate = DateTime.Now;
+            list.UpdateDate = list.CreateDate;
+
+            _context.Lists.Add(list);
+            await _context.SaveChangesAsync();
+
+            response.Data = GetListById(list.Id).Result.Data;
 
             return response;
         }

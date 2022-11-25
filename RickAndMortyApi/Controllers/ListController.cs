@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RickAndMortyApi.Dtos.List;
 using RickAndMortyApi.Models;
@@ -21,6 +22,17 @@ namespace RickAndMortyApi.Controllers
         public async Task<ActionResult<ServiceResponse<GetListDto>>> GetListById(int id)
         {
             ServiceResponse<GetListDto> response = await _listService.GetListById(id);
+
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        [HttpPost, Authorize]
+        public async Task<ActionResult<ServiceResponse<GetListDto>>> AddList(AddListDto newList)
+        {
+            ServiceResponse<GetListDto> response = await _listService.AddList(newList);
 
             if (!response.Success)
                 return BadRequest(response);
