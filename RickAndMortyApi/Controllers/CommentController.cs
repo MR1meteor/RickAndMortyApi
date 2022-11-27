@@ -20,7 +20,7 @@ namespace RickAndMortyApi.Controllers
             _commentService = commentService;
         }
 
-        [HttpGet("{id}"), AllowAnonymous]
+        [HttpGet("getbyid/{id}"), AllowAnonymous]
         public async Task<ActionResult<ServiceResponse<GetCommentDto>>> GetCommentById(int id)
         {
             ServiceResponse<GetCommentDto> response = await _commentService.GetCommentById(id);
@@ -41,6 +41,18 @@ namespace RickAndMortyApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("getbytopic/{topicId}"), AllowAnonymous]
+        public async Task<ActionResult<ServiceResponse<List<GetCommentDto>>>> GetCommentByTopic(int topicId)
+        {
+            ServiceResponse<List<GetCommentDto>> response = await _commentService.GetCommentsByTopic(topicId);
+
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
         //[HttpGet, AllowAnonymous]
         //public async Task<ActionResult<ServiceResponse<List<GetCommentDto>>>> GetByFilter([FromQuery] CommentParameters parameters, int page = 1, int amount = 10)
         //{

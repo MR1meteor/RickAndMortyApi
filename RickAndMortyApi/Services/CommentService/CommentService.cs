@@ -72,6 +72,29 @@ namespace RickAndMortyApi.Services.CommentService
             return response;
         }
 
+        public async Task<ServiceResponse<List<GetCommentDto>>> GetCommentsByTopic(int topicId)
+        {
+            ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
+
+            var comments = await _context.Comments.Include(c => c.User).Include(c => c.Topic).Where(c => c.TopicId == topicId && c.ParentId == 0).Select(c => _mapper.Map<GetCommentDto>(c)).ToListAsync();
+
+            if (comments == null || comments.Count == 0)
+            {
+                response.Success = false;
+                response.Message = "Comment(s) not found";
+                return response;
+            }
+
+            foreach(var item in comments)
+            {
+                item.Childrens = GetCommentsByParent(item.Id).Result.Data;
+            }
+
+            response.Data = comments;
+
+            return response;
+        }
+
         //public async Task<ServiceResponse<List<GetCommentDto>>> GetCommentsByFilter(int amount, int page, CommentParameters parameters)
         //{
         //    ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();

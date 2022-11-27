@@ -8,6 +8,7 @@ namespace RickAndMortyApi.Services.CommentService
     {
         public Task<ServiceResponse<GetCommentDto>> GetCommentById(int id);
         public Task<ServiceResponse<List<GetCommentDto>>> GetCommentsByParent(int parentId);
+        public Task<ServiceResponse<List<GetCommentDto>>> GetCommentsByTopic(int topicId);
         //public Task<ServiceResponse<List<GetCommentDto>>> GetCommentsByFilter(int amount, int page, CommentParameters parameters);
         public Task<ServiceResponse<GetCommentDto>> AddComment(AddCommentDto newComment);
         public Task<ServiceResponse<GetCommentDto>> UpdateComment(UpdateCommentDto updatedComment);
