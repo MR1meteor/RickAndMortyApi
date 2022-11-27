@@ -19,6 +19,7 @@ namespace RickAndMortyApi.Dtos.Comment
         public GetTopicDto<object>? Topic { get; set; }
         public string Text { get; set; } = string.Empty;
         public int? ParentId { get; set; }
+        public List<GetCommentDto>? Childrens { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public GetProfileDto? User { get; set; }
